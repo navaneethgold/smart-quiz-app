@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended:true}));
 const sessionOptions={
     secret:process.env.SECRET,
     resave:false,
-    saveUninitialized:false,
+    saveUninitialized:true,
     cookie:{
         httpOnly:true,
         sameSite:"none",
@@ -26,7 +26,7 @@ const sessionOptions={
     },
 };
 const allowedOrigins=[
-    "https://localhost:5173"
+    "http://localhost:5173"
 ]
 app.use(cors({
     origin:(origin,callback)=>{
@@ -51,13 +51,23 @@ async function main(){
     await mongoose.connect(db_url);
 }
 
-app.post("/signUp",async(req,res)=>{
-    const {username,email,password}=req.body;
-    const hashedPassword=await bcrypt.hash(password,10);
-    const new_user=new user({username,email,password:hashedPassword});
+app.post("/signUp", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    const existingUser = await user.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already in use" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const new_user = new user({ username, email, password: hashedPassword });
     await new_user.save();
-    res.status(201).json({message:"user created"});
+    res.status(201).json({ message: "User created" });
+  } catch (error) {
+    console.error("Signup Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
+
 
 app.post("/login",async(req,res)=>{
     const {username,password}=req.body;
@@ -65,13 +75,20 @@ app.post("/login",async(req,res)=>{
     if(!userExist) return res.status(400).json({message:"Invalid Username"});
     const userMatch=await bcrypt.compare(password,userExist.password);
     if(!userMatch) return res.status(400).json({message:"Invalid Password"});
-    const token=jwt.sign({userId:user._id},process.env.JWT_SECRET,{
-        expiresIn:'1h'
-    });
+    const token = jwt.sign(
+      {
+        userId: userExist._id,
+        email: userExist.email,
+        username: userExist.username   // optional: any fields you want to access later
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
     res.status(200).json({token,message:"Login successful"})
 })
 
-app.get("/check-login",auth,(req,res)=>{
+app.get("/api/auth/check-login",auth,(req,res)=>{
+    console.log(req.user);
     res.status(200).json({
         isLoggedIn: true,
         user: req.user,
