@@ -140,8 +140,84 @@ app.get("/groups/getAll",auth,async(req,res)=>{
     return res.status(400).json({message:"Failed to fetch groups",fetched:false});
   }
 }) 
+app.get("/groups/:id",auth,async(req,res)=>{
+  const {id}=req.params;
+  try{
+    const grou=await group.findOne({_id:id});
+    return res.status(200).json({message:"Successfully fetched",fetched:true,grp:grou});
+  }catch(err){
+    console.log(err);
+    return res.status(400).json({message:"failed to fetch",fetched:false});
+  }
+  
+})
 
+app.put("/groups/:id/addmem", auth, async (req, res) => {
+  const groupId = req.params.id;
+  const { email } = req.body;
 
+  if (!email) {
+    return res.status(400).json({ message: "Email is required." ,added:false});
+  }
+
+  try {
+    const pgroup = await group.findById(groupId);
+    if (!pgroup) {
+      return res.status(404).json({ message: "Group not found." ,added:false});
+    }
+
+    // Optional: Only allow creator to add members
+    if (pgroup.createdBy !== req.user.username) {
+      console.log(pgroup.createdBy);
+      console.log(req.user.email);
+      return res.status(403).json({ message: "Only group creator can add members." ,added:false});
+    }
+
+    //Check if user exists
+    const puser = await user.findOne({ email });
+    if (!puser) {
+      return res.status(404).json({ message: "No user found with this email." ,added:false});
+    }
+
+    //Prevent duplicate
+    if (pgroup.members.includes(puser.username)) {
+      return res.status(400).json({ message: "User is already a member of this group." ,added:false});
+    }
+
+    //Add member
+    pgroup.members.push(puser.username);
+    await pgroup.save();
+
+    return res.status(200).json({ message: "Member added successfully." ,added:true});
+  } catch (error) {
+    console.error("Error adding member:", error);
+    return res.status(500).json({ message: "Internal server error." ,added:false});
+  }
+});
+
+app.put("/groups/:id/removemem", auth, async (req, res) => {
+  const { id } = req.params;
+  const { part } = req.body;
+  try {
+    const pgroup = await group.findById(id);
+    if (!pgroup) {
+      return res.status(404).json({ message: "Group not found", removed: false });
+    }
+    if (pgroup.createdBy !== req.user.username) {
+      return res.status(403).json({ message: "Only the group creator can remove members.", removed: false });
+    }
+    const index = pgroup.members.indexOf(part);
+    if (index === -1) {
+      return res.status(404).json({ message: "User not found in the group", removed: false });
+    }
+    pgroup.members.splice(index, 1);
+    await pgroup.save();
+    return res.status(200).json({ message: "Member removed successfully", removed: true });
+  } catch (err) {
+    console.error("Remove member error:", err);
+    return res.status(500).json({ message: "An error occurred while removing the member", removed: false });
+  }
+});
 
 
 app.get("/ping", (req, res) => {

@@ -11,6 +11,7 @@ const Groups=()=>{
     const [type,setistype]=useState("");
     const [roles,setRoles]=useState([]);
     const token=localStorage.getItem("token");
+    const navigate=useNavigate();
     const fetchGroups = useCallback(async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/groups/getAll`, {
@@ -61,16 +62,10 @@ const Groups=()=>{
             setistype("error");
         }
     }
-    const handleViewGroup = async (groupId) => {
+    const handleViewGroup = (id) => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/groups/${groupId}`, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log("Group Details:", res.data); // For now, log it or handle as needed
-        // Optionally: Navigate or show in modal
+        console.log(id);
+        navigate(`/groups/${id}`);
       } catch (error) {
         console.error("Error fetching group:", error);
         setflashMessage("Failed to fetch group details.");

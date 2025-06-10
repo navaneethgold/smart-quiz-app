@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Layout/>}>
             <Route path="/home" element={<Home />} />
             <Route path="/groups" element={<Groups/>}/>
-            <Route path="/groups/:groupId" element={<Pgroup/>}/>
+            <Route path="/groups/:id" element={<Pgroup/>}/>
           </Route>
       </Routes>
     </BrowserRouter>
