@@ -45,8 +45,6 @@ const Home=()=>{
     },[])
     return(
         <>
-            {isLogged && <h3>{userData.username}</h3>}
-            {flashMessage && <Flash message={flashMessage} type={type}/>}
         </>
     )
 }

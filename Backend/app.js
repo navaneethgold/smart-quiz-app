@@ -8,6 +8,8 @@ import session from 'express-session';
 import jwt from 'jsonwebtoken';
 import user from './models/user.js';
 import auth from './routes/auth.js';
+import group from './models/groups.js';
+import { error } from 'node:console';
 dotenv.config();
 const app=express();
 const server=createServer(app);
@@ -95,6 +97,52 @@ app.get("/api/auth/check-login",auth,(req,res)=>{
         message: "Token is valid"
     });
 })
+
+app.post("/groups/new/:gn",auth,async(req,res)=>{
+  const {gn}=req.params;
+  try{
+    const puser=req.user.username;
+    const grpExists=await group.findOne({groupName:gn,createdBy:puser});
+    if(grpExists) return res.json({message:"Group already exists",created:false});
+    const new_grp={
+      groupName:gn,
+      createdBy:puser
+    }
+    const registered_grp=new group(new_grp);
+    await registered_grp.save();
+    return res.status(200).json({message:"Group created Successfully",created:true});
+  }catch(err){
+    console.log(err);
+    return res.status(401).json({message:"Failed to create a group",created:false})
+  }
+})
+
+
+app.get("/groups/getAll",auth,async(req,res)=>{
+  try{
+    const allGroups=await group.find({
+      $or:[
+        {createdBy:req.user.username},
+        {members:req.user.username}
+      ]
+    });
+    const role=[];
+    for(const grp of allGroups){
+      if(grp.createdBy===req.user.username){
+        role.push("Admin");
+      }else{
+        role.push("Participant")
+      }
+    }
+    return res.status(200).json({message:"Fetched all groups",fetched:true,allg:allGroups,roles:role});
+  }catch(err){
+    console.log(err);
+    return res.status(400).json({message:"Failed to fetch groups",fetched:false});
+  }
+}) 
+
+
+
 
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");
