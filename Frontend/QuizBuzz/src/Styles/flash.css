@@ -1,0 +1,15 @@
+.flash-message {
+  padding: 12px;
+  margin: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  animation: fadeOut 3s forwards;
+}
+
+.flash-message.success {
+  background-color: #4caf50;
+}
+.flash-message.error {
+  background-color: #f44336;
+}
