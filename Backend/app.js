@@ -9,10 +9,13 @@ import jwt from 'jsonwebtoken';
 import user from './models/user.js';
 import auth from './routes/auth.js';
 import group from './models/groups.js';
-import { error } from 'node:console';
+import { error, time } from 'node:console';
+import msgs from './models/messages.js';
+import Messaging from './controllers/chatting.js';
 dotenv.config();
 const app=express();
 const server=createServer(app);
+Messaging(server);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 const sessionOptions={
@@ -219,6 +222,28 @@ app.put("/groups/:id/removemem", auth, async (req, res) => {
   }
 });
 
+app.get("/groups/:id/fetchgroupChat",auth,async(req,res)=>{
+  const {id}=req.params;
+  try{
+    const allMsgs=await msgs.find({roomId:id}).sort({time:1});
+    const puser=req.user;
+    return res.json({fetched:true,message:allMsgs,puser:puser});
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({fetched:false,message:"failed to fetch chat"})
+  }
+})
+
+app.post("/groups/:id/addmsg",auth,async(req,res)=>{
+  const {id}=req.params;
+  const {newtxt2}=req.body;
+  try{
+    const newtxt3=new msgs(newtxt2);
+    await newtxt3.save();
+  }catch(err){
+    console.log(err);
+  }
+})
 
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");
