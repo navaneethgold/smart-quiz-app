@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../Styles/particularGroup.css";
 import Flash from "./flash";
+import { useNavigate } from "react-router-dom";
 
 export default function Pgroup() {
   const { id } = useParams();
+  const navigate=useNavigate();
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [newMember, setNewMember] = useState("");
@@ -71,15 +73,22 @@ export default function Pgroup() {
       setFlash({ message: error.response?.data?.message || "Error removing member", type: "error" });
     }
   };
-
+  const handleSubmit=()=>{
+    try{
+      navigate(`/groups/${id}/groupChat`);
+    }catch(err){
+      console.log(err);
+    }
+  }
   if (loading) return <p className="indiGroup">Loading...</p>;
   if (!group) return <p className="indiGroup">Group not found or unauthorized</p>;
+
 
   return (
     <div className="indiGroup">
       <h2>Group Name: {group.groupName}</h2>
       <p><strong>Created By:</strong> {group.createdBy}</p>
-      
+      <button onClick={handleSubmit}>GroupChat</button>
 
       <div className="add-member-container">
         <input

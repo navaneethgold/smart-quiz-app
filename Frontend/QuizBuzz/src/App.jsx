@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import './App.css'
 import Login from './pages/login'
 import Home from './pages/home'
@@ -6,6 +6,7 @@ import Signup from "./pages/signup";
 import Layout from "./Layout";
 import Groups from "./pages/groups";
 import Pgroup from "./pages/particularGroup";
+import GroupChat from "./pages/groupChat";
 function App() {
 
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/groups" element={<Groups/>}/>
             <Route path="/groups/:id" element={<Pgroup/>}/>
+            <Route path="/groups/:id/groupChat" element={<GroupChat/>}/>
           </Route>
       </Routes>
     </BrowserRouter>
