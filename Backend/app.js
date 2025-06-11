@@ -12,6 +12,7 @@ import group from './models/groups.js';
 import { error, time } from 'node:console';
 import msgs from './models/messages.js';
 import Messaging from './controllers/chatting.js';
+import exam from './models/exam.js';
 dotenv.config();
 const app=express();
 const server=createServer(app);
@@ -143,6 +144,17 @@ app.get("/groups/getAll",auth,async(req,res)=>{
     return res.status(400).json({message:"Failed to fetch groups",fetched:false});
   }
 }) 
+
+app.get("/groups/getAdmins",auth,async(req,res)=>{
+  try{
+    const allGroups=await group.find({createdBy:req.user.username});
+    return res.status(200).json({message:"Fetched all groups",fetched:true,allg:allGroups});
+  }catch(err){
+    console.log(err);
+    return res.status(400).json({message:"Failed to fetch groups",fetched:false});
+  }
+}) 
+
 app.get("/groups/:id",auth,async(req,res)=>{
   const {id}=req.params;
   try{
@@ -242,6 +254,23 @@ app.post("/groups/:id/addmsg",auth,async(req,res)=>{
     await newtxt3.save();
   }catch(err){
     console.log(err);
+  }
+})
+
+app.post("/create-new-exam",auth,async(req,res)=>{
+  const {groups,examName}=req.body;
+  const un=req.user.username;
+  try{
+    const newExam=new exam({
+      examName:examName,
+      createdBy:un,
+      groups:groups,
+    })
+    await newExam.save();
+    return res.json({message:"success",owner:un})
+  }catch(err){
+    console.log(err);
+    return res.json({message:"failure"});
   }
 })
 

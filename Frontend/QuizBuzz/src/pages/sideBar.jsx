@@ -50,7 +50,7 @@ export default function Sidebar(){
         navigate("/home")
     }
     const hnewexam=()=>{
-        // navigate("/newexam")
+        navigate("/create-exam");
     }
     const groups=()=>{
         navigate("/groups")

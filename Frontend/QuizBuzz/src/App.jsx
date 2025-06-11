@@ -7,6 +7,8 @@ import Layout from "./Layout";
 import Groups from "./pages/groups";
 import Pgroup from "./pages/particularGroup";
 import GroupChat from "./pages/groupChat";
+import CreateExam from "./pages/createExam";
+import CreateInterface from "./pages/createExamInterface";
 function App() {
 
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="/groups" element={<Groups/>}/>
             <Route path="/groups/:id" element={<Pgroup/>}/>
             <Route path="/groups/:id/groupChat" element={<GroupChat/>}/>
+            <Route path="/create-exam" element={<CreateExam/>}/>
+            <Route path="/:un/:exam" element={<CreateInterface/>}/>
           </Route>
       </Routes>
     </BrowserRouter>
