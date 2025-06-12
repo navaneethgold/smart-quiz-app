@@ -14,6 +14,7 @@ import msgs from './models/messages.js';
 import Messaging from './controllers/chatting.js';
 import exam from './models/exam.js';
 import question from './models/Questions.js';
+import answer from './models/answers.js';
 dotenv.config();
 const app=express();
 const server=createServer(app);
@@ -319,6 +320,47 @@ app.put("/:name/setEnd",async(req,res)=>{
   pexam.endTime=new Date(Date.now() + pexam.duration *60 *1000);
   await pexam.save();
   return res.json({message:"Exam is started",end:pexam.endTime,set:true});
+})
+
+app.get("/:name/getQuestions",async(req,res)=>{
+  const {name}=req.params;
+  try{
+    const Myexam=await exam.findOne({_id:name});
+    if(!Myexam){
+      return res.json({message:"No exam found",got:false});
+    }
+    const allQuestions=await question.find({examName:Myexam.examName}).sort({questionNo:1});
+    return res.json({message:"Got all the questions", questions:allQuestions,got:true,Nowexam:Myexam});
+  }catch(err){
+    console.log(err);
+    return res.json({message:"Failed to get Questions",got:false})
+  }
+})
+
+app.post("/:name/submitAnswers",auth,async(req,res)=>{
+  const {answers}=req.body;
+  try{
+    const myid=answers.id;
+    const Myexam=await exam.findOne({_id:myid});
+    const examname=Myexam.examName;
+    const Noquestions=await question.find({examName:examname});
+    const Numberquestions=Noquestions.length;
+    const onlyAns=[];
+    for(let i=1;i<=Numberquestions;i++){
+      onlyAns.push(answers[i]);
+    }
+    const ans={
+      examWho:req.user.username,
+      examName:examname,
+      answersAll:onlyAns
+    }
+    const ans_reg=new answer(ans);
+    await ans_reg.save();
+    return res.json({message:"Submitted Successfully",sub:true});
+  }catch(err){
+    console.log(err);
+    return res.json({message:"Failed to submit answers",sub:false});
+  }
 })
 
 app.get("/ping", (req, res) => {
