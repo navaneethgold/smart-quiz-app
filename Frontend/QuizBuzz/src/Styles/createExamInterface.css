@@ -1,0 +1,78 @@
+.create-interface {
+  position: fixed;
+  top: 14vh;
+  left: 590px;
+  max-width: 900px;
+  padding: 1.5rem;
+  background-color: #fefefe;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+
+
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-height: 65vh;
+  overflow-y: auto;
+  margin-top: 2rem;
+  
+}
+
+.question-box {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.question-box h3 {
+  margin-top: 0;
+}
+
+.question-box select,
+.question-box textarea,
+.question-box input {
+  width: 95%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.mcq-options input {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-btn {
+  background-color: #007bff;
+  color: white;
+  margin-top: 0.5rem;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}
+
+.add-question-btn {
+  background-color: #28a745;
+  color: white;
+  align-self: flex-start;
+}
+
+.add-question-btn:hover {
+  background-color: #1e7e34;
+}

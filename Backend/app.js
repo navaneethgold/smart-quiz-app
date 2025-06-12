@@ -13,6 +13,7 @@ import { error, time } from 'node:console';
 import msgs from './models/messages.js';
 import Messaging from './controllers/chatting.js';
 import exam from './models/exam.js';
+import question from './models/Questions.js';
 dotenv.config();
 const app=express();
 const server=createServer(app);
@@ -258,13 +259,14 @@ app.post("/groups/:id/addmsg",auth,async(req,res)=>{
 })
 
 app.post("/create-new-exam",auth,async(req,res)=>{
-  const {groups,examName}=req.body;
+  const {groups,examName,duration}=req.body;
   const un=req.user.username;
   try{
     const newExam=new exam({
       examName:examName,
       createdBy:un,
       groups:groups,
+      duration:duration
     })
     await newExam.save();
     return res.json({message:"success",owner:un})
@@ -273,6 +275,21 @@ app.post("/create-new-exam",auth,async(req,res)=>{
     return res.json({message:"failure"});
   }
 })
+
+app.post("/create-new-exam/:exam/create-question",async(req,res)=>{
+  const {exam}=req.params;
+  const {payload}=req.body;
+  try{
+    const reg_qusetion=new question(payload);
+    await reg_qusetion.save();
+    return res.json({message:"Successfully created new question",created:true});
+  }catch(err){
+    console.log(err);
+    return res.json({message:"Failed to save",created:false});
+  }
+  
+})
+
 
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");

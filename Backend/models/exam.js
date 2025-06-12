@@ -3,6 +3,7 @@ const examSchema=new mongoose.Schema({
     examName:{type:String,required:true},
     createdBy:{type:String,required:true},
     groups:{type:[String],required:true},
+    duration:{type:Number,required:true},
     time:{type:Date,default:Date.now}
 })
 const exam=mongoose.model("exam",examSchema);

@@ -10,6 +10,7 @@ const CreateExam=()=>{
     const [flashMessage,setflashMessage]=useState("");
     const [type,setistype]=useState("");
     const token=localStorage.getItem("token");
+    const [totalTime, setTotalTime] = useState(0);
     const navigate=useNavigate();
     const [checked,setisChecked]=useState([]);
     const fetchGroups = useCallback(async () => {
@@ -52,7 +53,7 @@ const CreateExam=()=>{
         })
     }
     const handleProceeding=async()=>{
-        const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam},{
+        const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime},{
             withCredentials:true,
             headers:{
                 Authorization: `Bearer ${token}`
@@ -62,7 +63,6 @@ const CreateExam=()=>{
             const un=res.data.owner;
             navigate(`/${un}/${exam}`);
         }
-        // navigate()
     }
 
     return(
@@ -96,6 +96,14 @@ const CreateExam=()=>{
             </div>
             <div className="proceed">
                 <input type="text" value={exam} onChange={handleChange} />
+                <div className="exam-time">
+                  <label>Total Exam Time (in minutes): </label>
+                  <input
+                    type="number"
+                    value={totalTime}
+                    onChange={(e) => setTotalTime(e.target.value)}
+                  />
+                </div>
                 <button onClick={handleProceeding}>Proceed with creating Exam</button>
             </div>
 

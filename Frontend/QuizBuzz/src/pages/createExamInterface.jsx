@@ -1,6 +1,127 @@
 import { useState } from "react";
 import axios from "axios";
-const CreateInterface=()=>{
+import { useParams } from "react-router-dom";
+import "../Styles/createExamInterface.css";
+import Flash from "./flash";
 
-}
+const CreateInterface = () => {
+  const { un, exam } = useParams();
+  const [questions, setQuestions] = useState([createEmptyQuestion()]);
+  const [flashMessage,setflashMessage]=useState("");
+  const [type,setistype]=useState("");
+  const [showFlash, setShowFlash] = useState(false);  // global flag
+
+  function createEmptyQuestion() {
+    return {
+      questionsType: "MCQ",
+      question: "",
+      additional: [""]
+    };
+  }
+  function showFlashMessage(msg, t = "success") {
+    setflashMessage(msg);
+    setistype(t);
+    setShowFlash(true);
+  }
+
+  const handleTypeChange = (index, newType) => {
+    const updated = [...questions];
+    updated[index].questionsType = newType;
+    if (newType !== "MCQ") updated[index].additional = [];
+    setQuestions(updated);
+  };
+
+  const handleQuestionTextChange = (index, text) => {
+    const updated = [...questions];
+    updated[index].question = text;
+    setQuestions(updated);
+  };
+
+  const handleOptionChange = (qIndex, optIndex, value) => {
+    const updated = [...questions];
+    updated[qIndex].additional[optIndex] = value;
+    setQuestions(updated);
+  };
+
+  const addOption = (index) => {
+    const updated = [...questions];
+    updated[index].additional.push("");
+    setQuestions(updated);
+  };
+
+  const addQuestion = () => {
+    setQuestions([...questions, createEmptyQuestion()]);
+  };
+
+  const saveQuestion = async (index) => {
+    const payload = {
+      examName: exam,
+      questionNo:index+1,
+      ...questions[index]      
+    };
+    console.log(payload);
+    try {
+      const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam/${exam}/create-question`, {payload}, {
+        withCredentials: true
+      });
+      if(res.data.created){
+        showFlashMessage(res.data.message, "success");
+      }
+    } catch (err) {
+      console.error(err);
+      const errorMessage = err.response?.data?.message || "Login failed";
+      showFlashMessage(errorMessage, "error");
+    }
+  };
+
+  return (
+    <div className="create-interface">
+      <h2>Create Exam: {exam}</h2>
+      
+
+      <div className="questions-container">
+        {questions.map((q, index) => (
+          <div className="question-box" key={index}>
+            <h3>Question {index + 1}</h3>
+            <label>Type:</label>
+            <select
+              value={q.questionsType}
+              onChange={(e) => handleTypeChange(index, e.target.value)}
+            >
+              <option value="MCQ">MCQ</option>
+              <option value="TrueFalse">True/False</option>
+              <option value="FillBlank">Fill in the Blank</option>
+            </select>
+            <textarea
+              placeholder="Enter question..."
+              value={q.question}
+              onChange={(e) => handleQuestionTextChange(index, e.target.value)}
+            />
+
+            {q.questionsType === "MCQ" && (
+              <div className="mcq-options">
+                {q.additional.map((opt, optIndex) => (
+                  <input
+                    key={optIndex}
+                    placeholder={`Option ${optIndex + 1}`}
+                    value={opt}
+                    onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
+                  />
+                ))}
+                <button type="button" onClick={() => addOption(index)}>Add Option</button>
+              </div>
+            )}
+
+            <button onClick={() => saveQuestion(index)} className="save-btn">
+              Save Question
+            </button>
+            <Flash message={flashMessage} type={type} show={showFlash} setShow={setShowFlash} />
+          </div>
+        ))}
+        <button onClick={addQuestion} className="add-question-btn">Add Question</button>
+      </div>
+    </div>
+  );
+};
+
 export default CreateInterface;
