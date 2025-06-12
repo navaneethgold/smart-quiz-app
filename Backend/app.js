@@ -291,6 +291,36 @@ app.post("/create-new-exam/:exam/create-question",async(req,res)=>{
 })
 
 
+app.get("/home/getExams/:username",async(req,res)=>{
+  const {username}=req.params;
+  try{
+    const hisGroups=await group.find({members:username});
+    const groupIds=[];
+    for(const grp of hisGroups){
+      groupIds.push(grp._id);
+    }
+    const hisExams= await exam.find({groups:{$in:groupIds}});
+    return res.json({message:"Got exams" ,gotExams:true,exams:hisExams});
+  }catch(err){
+    console.log(err);
+    return res.json({message:"failed to get exams", gotExams:false});
+  }
+  
+
+})
+
+app.put("/:name/setEnd",async(req,res)=>{
+  const {name}=req.params;
+  const pexam=await exam.findOne({_id:name});
+  if(!pexam) return res.json({message:"exam not found" ,set:false});
+  if(pexam.endTime!=null){
+    return res.json({message:"you already started your exam",set:false})
+  }
+  pexam.endTime=new Date(Date.now() + pexam.duration *60 *1000);
+  await pexam.save();
+  return res.json({message:"Exam is started",end:pexam.endTime,set:true});
+})
+
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");
 });

@@ -1,0 +1,66 @@
+.home-page {
+  position: fixed;
+  top: 14vh;
+  left: 225px;
+  width: calc(100%-225px);
+  right: 0;
+  padding: 2rem;
+  background-color: #f4f6f8;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.exam-heading {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-height: 70vh;
+  overflow: auto;
+
+}
+
+.exam-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease;
+}
+
+.exam-card:hover {
+  transform: translateY(-5px);
+}
+
+.exam-card h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #007bff;
+}
+
+.exam-card p {
+  margin: 0.5rem 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.start-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-btn:hover {
+  background-color: #1e7e34;
+}

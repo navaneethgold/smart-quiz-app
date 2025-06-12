@@ -8,6 +8,9 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 
@@ -16,10 +19,10 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-height: 65vh;
+  max-height: 60vh;
   overflow-y: auto;
   margin-top: 2rem;
-  
+
 }
 
 .question-box {
@@ -74,5 +77,15 @@ button {
 }
 
 .add-question-btn:hover {
+  background-color: #1e7e34;
+}
+
+.add-question-btn2 {
+  background-color: #28a745;
+  color: white;
+  margin-top: 1rem;
+}
+
+.add-question-btn2:hover {
   background-color: #1e7e34;
 }

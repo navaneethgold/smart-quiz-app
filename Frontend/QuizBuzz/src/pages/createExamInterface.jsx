@@ -3,9 +3,11 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../Styles/createExamInterface.css";
 import Flash from "./flash";
+import { useNavigate } from "react-router-dom";
 
 const CreateInterface = () => {
   const { un, exam } = useParams();
+  const navigate=useNavigate();
   const [questions, setQuestions] = useState([createEmptyQuestion()]);
   const [flashMessage,setflashMessage]=useState("");
   const [type,setistype]=useState("");
@@ -120,6 +122,7 @@ const CreateInterface = () => {
         ))}
         <button onClick={addQuestion} className="add-question-btn">Add Question</button>
       </div>
+      <button className="add-question-btn2" onClick={()=>navigate("/home")}>Create Exam</button>
     </div>
   );
 };

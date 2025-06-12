@@ -4,7 +4,8 @@ const examSchema=new mongoose.Schema({
     createdBy:{type:String,required:true},
     groups:{type:[String],required:true},
     duration:{type:Number,required:true},
-    time:{type:Date,default:Date.now}
+    createtime:{type:Date,default:Date.now},
+    endTime:{type:Date,default:null}
 })
 const exam=mongoose.model("exam",examSchema);
 export default exam;
