@@ -101,7 +101,12 @@ const Home = () => {
               >
                 {exam.endTime===null ? "Start Exam":"Resume Exam"}
               </button>}
-              {exam.submitted && <button className="start-btn" style={{backgroundColor:"blue"}}>Exam Completed</button>}
+              {exam.submitted && 
+                <>
+                  <button className="start-btn" style={{backgroundColor:"blue"}}>Exam Completed</button>
+                  <button className="start-btn" style={{marginLeft:"2rem"}} onClick={()=>navigate(`/${exam._id}/analytics`)}>View Analytics</button>
+                </>
+              }
             </div>
           ))
         ) : (

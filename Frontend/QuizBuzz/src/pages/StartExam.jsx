@@ -162,7 +162,7 @@ const handleSubmit = async () => {
           />
         )}
         <div className="nav-buttons">
-          <button disabled={currentIndex === 0} onClick={handlePrev}>Previous</button>
+          {examDetails.linearity && <button disabled={currentIndex === 0} onClick={handlePrev}>Previous</button>}
           <button disabled={currentIndex === questions.length - 1} onClick={handleNext}>Next</button>
         </div>
         <div className="submit-btn">

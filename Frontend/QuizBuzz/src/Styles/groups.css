@@ -99,7 +99,6 @@
   transition: background-color 0.3s ease;
 }
 .exam-time {
-  margin-bottom: 1.5rem;
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -109,4 +108,33 @@
   padding: 0.5rem;
   font-size: 1rem;
   width: 100px;
+}
+.ename{
+  display: flex;
+  gap: 1rem;
+}
+.foot{
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+  padding: 1rem;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.proceed{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.proceed button{
+  width: 50vw;
+  align-self: center;
+  background-color: greenyellow;
+}
+#linear{
+  width: 5rem;
+}
+.linear{
+  display: flex;
+  gap: 1rem;
 }

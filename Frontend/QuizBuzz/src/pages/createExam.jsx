@@ -13,6 +13,7 @@ const CreateExam=()=>{
     const [totalTime, setTotalTime] = useState(0);
     const navigate=useNavigate();
     const [checked,setisChecked]=useState([]);
+    const [linearity,setlinearity]=useState("");
     const fetchGroups = useCallback(async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/groups/getAdmins`, {
@@ -53,7 +54,7 @@ const CreateExam=()=>{
         })
     }
     const handleProceeding=async()=>{
-        const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime},{
+        const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime,linear:linearity==="Yes"},{
             withCredentials:true,
             headers:{
                 Authorization: `Bearer ${token}`
@@ -95,15 +96,28 @@ const CreateExam=()=>{
               )}
             </div>
             <div className="proceed">
-                <input type="text" value={exam} onChange={handleChange} />
-                <div className="exam-time">
-                  <label>Total Exam Time (in minutes): </label>
-                  <input
-                    type="number"
-                    value={totalTime}
-                    onChange={(e) => setTotalTime(e.target.value)}
-                  />
+                <div className="foot">
+                    <div className="ename">
+                        <label>Exam Name:</label>
+                        <input type="text" value={exam} onChange={handleChange} />
+                    </div>
+                    <div className="exam-time">
+                      <label>Total Exam Time (in minutes): </label>
+                      <input
+                        type="number"
+                        value={totalTime}
+                        onChange={(e) => setTotalTime(e.target.value)}
+                      />
+                    </div>
+                    <div className="linear">
+                        <label>Linear Mode of exam</label>
+                        <select name="linearity" id="linear" value={linearity} onChange={(e)=>setlinearity(e.target.value)}>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
                 </div>
+                
                 <button onClick={handleProceeding}>Proceed with creating Exam</button>
             </div>
 

@@ -260,14 +260,15 @@ app.post("/groups/:id/addmsg",auth,async(req,res)=>{
 })
 
 app.post("/create-new-exam",auth,async(req,res)=>{
-  const {groups,examName,duration}=req.body;
+  const {groups,examName,duration,linear}=req.body;
   const un=req.user.username;
   try{
     const newExam=new exam({
       examName:examName,
       createdBy:un,
       groups:groups,
-      duration:duration
+      duration:duration,
+      linearity:linear
     })
     await newExam.save();
     return res.json({message:"success",owner:un})

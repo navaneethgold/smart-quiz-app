@@ -10,6 +10,7 @@ import GroupChat from "./pages/groupChat";
 import CreateExam from "./pages/createExam";
 import CreateInterface from "./pages/createExamInterface";
 import ExamStart from "./pages/StartExam";
+import Analytics from "./pages/Analytics";
 function App() {
 
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/create-exam" element={<CreateExam/>}/>
             <Route path="/:un/:exam" element={<CreateInterface/>}/>
             <Route path="/start-exam/:name" element={<ExamStart/>}/>
+            <Route path="/:exam/analytics" element={<Analytics/>}/>
           </Route>
       </Routes>
     </BrowserRouter>
