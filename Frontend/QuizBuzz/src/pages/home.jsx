@@ -11,6 +11,7 @@ const Home = () => {
   const [type, setistype] = useState("");
   const [allExams, setallExams] = useState([]);
   const navigate = useNavigate();
+  const [grpNames,setgrpNames]=useState({});
 
   const token = localStorage.getItem("token");
 
@@ -61,6 +62,7 @@ const Home = () => {
         });
         if (res.data.gotExams) {
           setallExams(res.data.exams);
+          setgrpNames(res.data.grpNames);
         }
       } catch (err) {
         console.error("Failed to fetch exams", err);
@@ -88,15 +90,18 @@ const Home = () => {
             <div className="exam-card" key={exam._id}>
               <h2>{exam.examName}</h2>
               <p><strong>Created by:</strong> {exam.createdBy}</p>
-              <p><strong>Groups:</strong> {exam.groups.join(", ")}</p>
+              <p><strong>Groups:</strong> {exam.groups.map((grp)=>
+                grpNames[grp] || grp).join(", ")
+              }</p>
               <p><strong>Duration:</strong> {exam.duration} minutes</p>
-              <p><strong>Created on:</strong> {new Date(exam.time).toLocaleString()}</p>
-              <button
+              <p><strong>Created on:</strong> {new Date(exam.createtime).toLocaleString()}</p>
+              {!exam.submitted && <button
                 className="start-btn"
                 onClick={() => startExam(exam._id)}
               >
                 {exam.endTime===null ? "Start Exam":"Resume Exam"}
-              </button>
+              </button>}
+              {exam.submitted && <button className="start-btn" style={{backgroundColor:"blue"}}>Exam Completed</button>}
             </div>
           ))
         ) : (

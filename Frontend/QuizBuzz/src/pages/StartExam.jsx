@@ -12,7 +12,8 @@ const ExamStart = () => {
   const [examDetails, setExamDetails] = useState();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState({id:name});
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -47,7 +48,9 @@ const ExamStart = () => {
   }, []);
 
   useEffect(() => {
-    if (timeLeft <= 0) return;
+    if (timeLeft===null || timeLeft <= 0){
+      return;
+    }
     const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
     return () => clearInterval(timer);
   }, [timeLeft]);
@@ -55,6 +58,11 @@ const ExamStart = () => {
   const handleAnswerChange = (questionNo, value) => {
     setAnswers((prev) => ({ ...prev, [questionNo]: value }));
   };
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleSubmit(); // Auto-submit exactly once
+    }
+  }, [timeLeft]);
 
   const handleNext = () => {
     if (currentIndex < questions.length - 1) setCurrentIndex(currentIndex + 1);
@@ -64,20 +72,34 @@ const ExamStart = () => {
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
   };
 
-  const handleSubmit = async () => {
-    try {
-        console.log(answers);
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/${name}/submitAnswers`, { answers }, {
+const handleSubmit = async () => {
+  if (submitted) return;
+  setSubmitted(true);
+
+  try {
+    console.log(answers);
+    const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/${name}/submitAnswers`, { answers }, {
+      withCredentials: true,
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (res.data.sub) {
+      const res2 = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/${name}/submitted`, {}, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert("Exam submitted successfully!");
-    //   navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
-      alert("Error submitting exam.");
+
+      if (res2.data.sub) {
+        alert("Exam submitted successfully!");
+      }
     }
-  };
+
+    navigate("/home");
+  } catch (err) {
+    console.error(err);
+    alert("Error submitting exam.");
+  }
+};
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);

@@ -5,7 +5,8 @@ const examSchema=new mongoose.Schema({
     groups:{type:[String],required:true},
     duration:{type:Number,required:true},
     createtime:{type:Date,default:Date.now},
-    endTime:{type:Date,default:null}
+    endTime:{type:Date,default:null},
+    submitted:{type:Boolean,default:false}
 })
 const exam=mongoose.model("exam",examSchema);
 export default exam;

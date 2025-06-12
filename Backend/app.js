@@ -300,8 +300,13 @@ app.get("/home/getExams/:username",async(req,res)=>{
     for(const grp of hisGroups){
       groupIds.push(grp._id);
     }
+    const corresgrpNames={};
     const hisExams= await exam.find({groups:{$in:groupIds}});
-    return res.json({message:"Got exams" ,gotExams:true,exams:hisExams});
+    for(const eachID of groupIds){
+      const pargroup=await group.findOne({_id:eachID});
+      corresgrpNames[eachID]=pargroup.groupName;
+    }
+    return res.json({message:"Got exams" ,gotExams:true,exams:hisExams,grpNames:corresgrpNames});
   }catch(err){
     console.log(err);
     return res.json({message:"failed to get exams", gotExams:false});
@@ -345,6 +350,7 @@ app.post("/:name/submitAnswers",auth,async(req,res)=>{
     const examname=Myexam.examName;
     const Noquestions=await question.find({examName:examname});
     const Numberquestions=Noquestions.length;
+    console.log("number of questions:",Numberquestions)
     const onlyAns=[];
     for(let i=1;i<=Numberquestions;i++){
       onlyAns.push(answers[i]);
@@ -362,6 +368,19 @@ app.post("/:name/submitAnswers",auth,async(req,res)=>{
     return res.json({message:"Failed to submit answers",sub:false});
   }
 })
+
+app.put("/:name/submitted", auth, async (req, res) => {
+  const { name } = req.params;
+  try {
+    const Myexam = await exam.findOne({ _id: name });
+    Myexam.submitted = true;
+    await Myexam.save();
+    return res.json({ message: "successfully submitted the exam", sub: true });
+  } catch (err) {
+    console.log(err);
+    return res.json({ message: "failed to submit the exam", sub: false });
+  }
+});
 
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");
