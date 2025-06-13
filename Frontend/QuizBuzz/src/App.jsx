@@ -11,6 +11,7 @@ import CreateExam from "./pages/createExam";
 import CreateInterface from "./pages/createExamInterface";
 import ExamStart from "./pages/StartExam";
 import Analytics from "./pages/Analytics";
+import LeaderBoard from "./pages/LeaderBoard";
 function App() {
 
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/:un/:exam" element={<CreateInterface/>}/>
             <Route path="/start-exam/:name" element={<ExamStart/>}/>
             <Route path="/:exam/analytics" element={<Analytics/>}/>
+            <Route path="/:exam/analytics/leaderboard" element={<LeaderBoard/>}/>
           </Route>
       </Routes>
     </BrowserRouter>

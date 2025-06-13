@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.weAreLeaders {
+  position: fixed;
+  top: 11vh;
+  left: 215px;
+  right: 0;
+  bottom: 0;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #f8fbff, #eaf3ff);
+  overflow-y: auto;
+}
+
+.leaderboard-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #003366;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.leaderboard-table th {
+  background-color: #004a99;
+  color: white;
+  font-weight: 600;
+}
+
+.leaderboard-table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: #e0f0ff;
+  transition: 0.3s ease;
+}
+
+.rank-gold {
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.rank-silver {
+  color: #c0c0c0;
+  font-weight: bold;
+}
+
+.rank-bronze {
+  color: #cd7f32;
+  font-weight: bold;
+}

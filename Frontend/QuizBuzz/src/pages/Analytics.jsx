@@ -12,6 +12,9 @@ const Analytics = () => {
   const [answers, setAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
+  const [marks,setMarks]=useState(0);
+  const [totalMarks,setTotalMarks]=useState(0);
+  const navigate=useNavigate();
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -35,16 +38,21 @@ const Analytics = () => {
             const userAnswers = res2.data.answersq.answersAll;
             console.log("user:",userAnswers);
             let correctCount = 0;
+            let correctMarks=0;
+            let tm=0;
             questionsFetched.forEach((q, i) => {
               if (userAnswers[i] && userAnswers[i].trim().toLowerCase() === q.qAnswer.trim().toLowerCase()) {
                 correctCount++;
+                correctMarks=correctMarks+q.marks;
               }
+              tm=tm+q.marks;
             });
 
             const totalQuestions = questionsFetched.length;
             const percentage = (correctCount / totalQuestions) * 100;
-
+            setTotalMarks(tm);
             setQuestions(questionsFetched);
+            setMarks(correctMarks);
             setExamDetails(examInfo);
             setUserData(user);
             setAnswers(userAnswers);
@@ -57,6 +65,7 @@ const Analytics = () => {
               totalQ: totalQuestions,
               correctQ: correctCount,
               duration: examInfo.duration,
+              marks:correctMarks,
               unattempted: numberUnattempted,
             };
             const res3=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/postAnalytics`,{newana:newAnalytic},{
@@ -81,13 +90,17 @@ const Analytics = () => {
         <div><strong>Student:</strong> {userData.username}</div>
         <div><strong>Exam Name:</strong> {examDetails.examName}</div>
         <div><strong>Total Questions:</strong> {questions.length}</div>
+        <div><strong>Marks Scored:</strong>{marks}/{totalMarks}</div>
         <div><strong>Correct Answers:</strong> {score}</div>
         <div><strong>Accuracy:</strong> {accuracy}%</div>
         <div><strong>Duration:</strong> {examDetails.duration} minutes</div>
       </div>
 
       <div className="analytics-breakdown">
-        <h2>Question-wise Analysis</h2>
+        <div className="shown">
+          <h2>Question-wise Analysis</h2>
+          <button onClick={()=>navigate(`/${examDetails._id}/analytics/leaderboard`)}>View LeaderBoard</button>
+        </div>
         {questions.map((q, idx) => (
           <div key={q._id} className={`question-block ${answers[idx]?.trim().toLowerCase() === q.qAnswer.trim().toLowerCase() ? 'correct' : 'wrong'}`}>
             <p><strong>Q{q.questionNo}:</strong> {q.question}</p>

@@ -18,7 +18,8 @@ const CreateInterface = () => {
       questionsType: "MCQ",
       question: "",
       additional: [""],
-      qAnswer:""
+      qAnswer:"",
+      marks:""
     };
   }
   function showFlashMessage(msg, t = "success") {
@@ -43,6 +44,11 @@ const CreateInterface = () => {
   const handleAnswerChange=(index,text)=>{
     const updated=[...questions];
     updated[index].qAnswer=text;
+    setQuestions(updated);
+  }
+  const handleMarksChange=(index,text)=>{
+    const updated=[...questions];
+    updated[index].marks=text;
     setQuestions(updated);
   }
 
@@ -121,6 +127,7 @@ const CreateInterface = () => {
               </div>
             )}
             <div className="qanswer"><label>Answer:</label><input type="text" placeholder="Type the answer for Evaluation" value={q.qAnswer} onChange={(e)=>{handleAnswerChange(index,e.target.value)}} required/></div>
+            <div className="marks"><label>Marks:</label><input type="number" placeholder="Marks awarded..." value={q.marks} onChange={(e)=>{handleMarksChange(index,e.target.value)}} required/></div>
             <button onClick={() => saveQuestion(index)} className="save-btn">
               Save Question
             </button>

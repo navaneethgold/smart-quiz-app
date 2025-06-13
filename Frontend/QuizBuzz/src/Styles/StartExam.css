@@ -89,3 +89,22 @@
 .submit-btn button {
   background-color: #28a745;
 }
+.marks{
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.preq{
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1rem;
+}

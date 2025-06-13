@@ -427,6 +427,20 @@ app.get("/getAllAnalytics",auth,async(req,res)=>{
   }
 })
 
+
+app.get("/:exam/analytics/leaderboard",auth,async(req,res)=>{
+  const {exam}=req.params;
+  try{
+    const allAnalytics=await analytic.find({examId:exam}).sort({marks:-1});
+    if(allAnalytics){
+      return res.json({message:"Succeessfully loaded leaderboard",got:true,leader:allAnalytics});
+    }
+  }catch(err){
+    console.log(err);
+    return res.json({message:"Failed to load leaderboard",got:false})
+  }
+})
+
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");
 });

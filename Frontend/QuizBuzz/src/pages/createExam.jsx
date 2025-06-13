@@ -13,7 +13,7 @@ const CreateExam=()=>{
     const [totalTime, setTotalTime] = useState(0);
     const navigate=useNavigate();
     const [checked,setisChecked]=useState([]);
-    const [linearity,setlinearity]=useState("");
+    const [linearity,setlinearity]=useState("Yes");
     const fetchGroups = useCallback(async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/groups/getAdmins`, {

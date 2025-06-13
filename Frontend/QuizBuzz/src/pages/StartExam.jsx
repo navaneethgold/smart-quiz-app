@@ -14,6 +14,7 @@ const ExamStart = () => {
   const [answers, setAnswers] = useState({id:name});
   const [timeLeft, setTimeLeft] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [totalMarks,settotalMarks]=useState(0);
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -25,7 +26,11 @@ const ExamStart = () => {
         if (res.data.got) {
           setQuestions(res.data.questions);
           setExamDetails(res.data.Nowexam);
-
+          let marks=0;
+          for(const ques of res.data.questions){
+            marks=marks+ques.marks;
+          }
+          settotalMarks(marks);
           const duration = res.data.Nowexam.duration * 60;
           const endTime = res.data.Nowexam.endTime
             ? new Date(res.data.Nowexam.endTime).getTime()
@@ -113,7 +118,12 @@ const handleSubmit = async () => {
 
   return (
     <div className="exam-interface">
-      <div className="timer">Time Left: {formatTime(timeLeft)}</div>
+      <div className="header">
+          <div className="timer">Time Left: {formatTime(timeLeft)}</div>
+          <div className="marks">Total Marks: {totalMarks}</div>
+          <div className="preq">This Question carries {currentQ.marks} marks</div>
+      </div>
+      
       <div className="question-box">
         <h3>Q{currentQ.questionNo}: {currentQ.question}</h3>
         {currentQ.questionsType === "MCQ" && (
@@ -162,7 +172,7 @@ const handleSubmit = async () => {
           />
         )}
         <div className="nav-buttons">
-          {examDetails.linearity && <button disabled={currentIndex === 0} onClick={handlePrev}>Previous</button>}
+          {!examDetails.linearity && <button disabled={currentIndex === 0} onClick={handlePrev}>Previous</button>}
           <button disabled={currentIndex === questions.length - 1} onClick={handleNext}>Next</button>
         </div>
         <div className="submit-btn">

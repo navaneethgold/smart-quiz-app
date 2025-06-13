@@ -5,6 +5,7 @@ const analyticsSchema=new mongoose.Schema({
     totalQ:{type:Number,required:true},
     correctQ:{type:Number,required:true},
     duration:{type:Number,required:true},
+    marks:{type:Number,required:true},
     unattempted:{type:Number,required:true}
 })
 const analytic=mongoose.model('analytic',analyticsSchema);

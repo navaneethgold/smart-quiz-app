@@ -46,3 +46,14 @@
   border-color: red;
   background-color: #ffe6e6;
 }
+.shown{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.shown button{
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+  color: white;
+}
