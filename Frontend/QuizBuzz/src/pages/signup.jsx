@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Flash from "./flash";
+import "../Styles/signup.css"
 
 const Signup = () => {
   const navigate=useNavigate();
@@ -15,6 +16,7 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [flashMessage,setflashMessage]=useState("");
   const [type ,setistype]=useState("");
+  const [show,setShow]=useState(false);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -44,17 +46,28 @@ const Signup = () => {
         setError(res.data.err); // user already exists
         return;
       }
+      
+      const res2 = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
+        username: formData.username,
+        password: formData.password
+      }, {
+        withCredentials: true
+      });
+      localStorage.setItem("token", res2.data.token);
       setflashMessage(res.data.message);
       setistype("success");
       setError(""); // Clear any previous error
+      setShow(true);
+
       setTimeout(() => {
-        navigate("/home");
+        navigate("/home")
       }, 3000);
     } catch (error) {
       console.error(error);
       setError("Signup failed due to a server error.");
       const errorMessage = error.response?.data?.message || "Login failed";
       setflashMessage(errorMessage);
+      setShow(true);
       setistype("error");
     }
   };
@@ -62,7 +75,7 @@ const Signup = () => {
   return (
     <div className="signup-container">
       <form onSubmit={handleSubmit} className="signup-form">
-        <h2 className="login-title"><img src="op1.png" alt="icon" />Welcome to QuizzBuzz👋</h2>
+        <h2 className="login-title"><img src="/icon.png" alt="icon" />Welcome to QuizzBuzz👋</h2>
         <input
           type="text"
           name="username"
@@ -102,7 +115,7 @@ const Signup = () => {
         {error && <p className="error-message" style={{color:"white"}}>{error}</p>}
 
         <button type="submit">Register</button>
-        {flashMessage && <Flash message={flashMessage} type={type}/>}
+        {show && <Flash message={flashMessage} type={type} show={show} setShow={setShow}/>}
         <h4>Already have an account? <span onClick={()=>navigate("/login")} className="signup-link">Login</span></h4>
       </form>
     </div>

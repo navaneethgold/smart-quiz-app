@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Flash from "./flash";
+import "../Styles/login.css"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [flashMessage,setflashMessage]=useState("");
   const [type ,setistype]=useState("");
+  const [show,setShow]=useState(false);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -29,6 +31,7 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       setflashMessage(res.data.message);
       setistype("success");
+      setShow(true);
       setTimeout(() => {
         navigate("/home");
       }, 3000);
@@ -36,6 +39,7 @@ const Login = () => {
       console.log(error);
       const errorMessage = error.response?.data?.message || "Login failed";
       setflashMessage(errorMessage);
+      setShow(true);
       setistype("error");
     }
   };
@@ -43,7 +47,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-card">
-        <h2 className="login-title"><img src="op1.png" alt="icon" />Welcome Back to QuizzBuzz👋</h2>
+        <h2 className="login-title"><img src="/icon.png" alt="icon" />Welcome Back to QuizzBuzz👋</h2>
         <input
           type="text"
           name="username"
@@ -61,7 +65,7 @@ const Login = () => {
           className="login-input"
         />
         <button type="submit" className="login-button">Login</button>
-        {flashMessage && <Flash message={flashMessage} type={type}/>}
+        {show && <Flash message={flashMessage} type={type} show={show} setShow={setShow}/>}
         <p className="signup-text">
           Don't have an account? <span onClick={() => navigate("/signUp")} className="signup-link">Sign up</span>
         </p>

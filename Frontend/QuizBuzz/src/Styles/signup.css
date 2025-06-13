@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.signup-container {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right,#80b5e7, #589ddd, #004a99);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.signup-form {
+  background: linear-gradient(to bottom, #d5e6f7, #e2e8f0);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 580px;
+  max-width: 90%;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+.signup-form:hover{
+  box-shadow:0 0 25px #7fff00;
+}
+.login-title {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #004a99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.login-title img {
+  width: 90px;
+  height: 90px;
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin: 0.65rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+.signup-form input:focus {
+  outline: none;
+  border: 1px solid #3a8ddb;
+  box-shadow: 0 0 5px rgba(58, 141, 219, 0.5);
+}
+
+.signup-form button {
+  width: 100%;
+  padding: 0.9rem;
+  margin-top: 1.3rem;
+  background-color: #004a99;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease,transform 0.3s ease;
+}
+.signup-form button:active{
+    transform: scale(0.95);
+}
+.signup-form button:hover {
+  background-color: #003366;
+}
+
+.signup-link {
+  color: #3a8ddb;
+  font-weight: 600;
+  cursor: pointer;
+  transition: text-decoration 0.3s;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+.signup-form h4 {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.error-message {
+  margin-top: 0.5rem;
+  background-color: #ff4d4f;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
