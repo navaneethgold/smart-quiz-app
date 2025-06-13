@@ -5,6 +5,7 @@ const questionsSchema=new mongoose.Schema({
     questionsType:{type:String,required:true},
     question:{type:String,required:true},
     additional:{type:[String],required:false,default:[]},
+    qAnswer:{type:String,required:true},
     createdAt:{type:Date,default:Date.now}
 })
 const question=mongoose.model("question",questionsSchema);

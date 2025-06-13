@@ -1,0 +1,48 @@
+.analytics-container {
+  position: fixed;
+  top: 14vh;
+  left: 225px;
+  bottom: 0;
+  right: 0;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+}
+
+.analytics-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.analytics-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.analytics-breakdown h2 {
+  margin-bottom: 1rem;
+}
+
+.question-block {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 5px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.question-block.correct {
+  border-color: green;
+  background-color: #e6ffe6;
+}
+
+.question-block.wrong {
+  border-color: red;
+  background-color: #ffe6e6;
+}

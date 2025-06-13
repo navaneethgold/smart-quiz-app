@@ -328,7 +328,7 @@ app.put("/:name/setEnd",async(req,res)=>{
   return res.json({message:"Exam is started",end:pexam.endTime,set:true});
 })
 
-app.get("/:name/getQuestions",async(req,res)=>{
+app.get("/:name/getQuestions",auth,async(req,res)=>{
   const {name}=req.params;
   try{
     const Myexam=await exam.findOne({_id:name});
@@ -336,7 +336,8 @@ app.get("/:name/getQuestions",async(req,res)=>{
       return res.json({message:"No exam found",got:false});
     }
     const allQuestions=await question.find({examName:Myexam.examName}).sort({questionNo:1});
-    return res.json({message:"Got all the questions", questions:allQuestions,got:true,Nowexam:Myexam});
+    const puser=req.user;
+    return res.json({message:"Got all the questions", questions:allQuestions,got:true,Nowexam:Myexam,puser:puser});
   }catch(err){
     console.log(err);
     return res.json({message:"Failed to get Questions",got:false})
@@ -382,6 +383,18 @@ app.put("/:name/submitted", auth, async (req, res) => {
     return res.json({ message: "failed to submit the exam", sub: false });
   }
 });
+
+app.get("/:name/getAnswers",auth,async(req,res)=>{
+  const {name}=req.params;
+  try{
+    const puser=req.user.username;
+    const allAnswers=await answer.findOne({examName:name,examWho:puser});
+    return res.json({message:"got all answers",answersq:allAnswers,got:true})
+  }catch(err){
+    console.log(err);
+    return res.json({message:"failed to fetch answers",got:false});
+  }
+})
 
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");
