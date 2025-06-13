@@ -1,13 +1,17 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
 .class {
   position: fixed;
-  top: 14vh;
-  left: 225px; /* Sidebar space */
-  width: calc(100% - 225px);
-  height: calc(100vh - 14vh);
+  top: 11vh;
+  left: 215px; /* Sidebar space */
+  width: calc(100% - 215px);
+  height: calc(100vh - 11vh);
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f9fafb;
+  /* background: linear-gradient(to bottom right, #f8fafc, #e2e8f0); */
+  background: linear-gradient(to bottom, #d5e6f7, #e2e8f0);
   padding: 20px;
   overflow-y: auto;
   box-sizing: border-box;
@@ -45,7 +49,7 @@
 
 .create button {
   padding: 10px 18px;
-  background-color: #2563eb;
+  background: linear-gradient(to right, #2563eb, #3b82f6);
   color: white;
   font-weight: 500;
   border: none;
@@ -80,7 +84,7 @@
   padding: 14px 20px;
   border-radius: 10px;
   background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   font-size: 15px;
   align-items: center;
 }
@@ -98,43 +102,102 @@
   background-color: #e0f2fe;
   transition: background-color 0.3s ease;
 }
-.exam-time {
+.exam-time,
+.ename,
+.linear {
   display: flex;
   gap: 1rem;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
-.exam-time input {
-  padding: 0.5rem;
+.exam-time input,
+.ename input,
+#linear {
+  padding: 0.6rem 1rem;
   font-size: 1rem;
-  width: 100px;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  background-color: #f9f9f9;
 }
-.ename{
-  display: flex;
-  gap: 1rem;
+
+.exam-time input:focus,
+.ename input:focus,
+#linear:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
-.foot{
+
+.foot {
   display: flex;
-  flex-direction: row;
-  width: 80vw;
+  flex-wrap: wrap;
+  width: 75vw;
   padding: 1rem;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  margin: 2rem auto;
 }
-.proceed{
+
+.proceed {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
-.proceed button{
-  width: 50vw;
-  align-self: center;
-  background-color: greenyellow;
+
+.proceed button {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #22c55e, #a3e635);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-#linear{
+
+.proceed button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 14px rgba(34, 197, 94, 0.3);
+}
+.ename input{
+  width: 10rem;
+}
+.exam-time input{
   width: 5rem;
 }
-.linear{
+label {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+#linear {
+  width: auto;
+  min-width: 120px;
+  background-color: #f9f9f9;
+}
+.exam-time,.linear,.ename{
+  margin: 0;
+}
+.class2 {
+  position: fixed;
+  top: 11vh;
+  left: 215px; /* Sidebar space */
+  width: calc(100% - 215px);
+  height: calc(100vh - 11vh);
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  /* background: linear-gradient(to bottom right, #f8fafc, #e2e8f0); */
+  background: linear-gradient(to bottom, #d5e6f7, #e2e8f0);
+  padding: 20px;
+  padding-top: 5rem;
+  overflow-y: auto;
+  box-sizing: border-box;
 }

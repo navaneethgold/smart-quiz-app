@@ -1,12 +1,12 @@
 .home-page {
   position: fixed;
-  top: 14vh;
-  left: 225px;
+  top: 11vh;
+  left: 215px;
   right: 0;
   bottom: 0;
   overflow-y: auto;
   padding: 20px;
-  background-color: #f8f9fc;
+  background: linear-gradient(to bottom, #d5e6f7, #e2e8f0);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #2c3e50;
 }

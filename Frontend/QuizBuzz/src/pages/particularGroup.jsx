@@ -88,7 +88,7 @@ export default function Pgroup() {
     <div className="indiGroup">
       <h2>Group Name: {group.groupName}</h2>
       <p><strong>Created By:</strong> {group.createdBy}</p>
-      <button onClick={handleSubmit}>GroupChat</button>
+      <button onClick={handleSubmit} id="gc">GroupChat</button>
 
       <div className="add-member-container">
         <input

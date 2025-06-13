@@ -89,39 +89,39 @@ export default function Sidebar(){
       </div>
         <div className="sidebar">
                 <div className="icon" onClick={hhome}>
-                    <div className="ic"><img src="/Icon.png" alt="icon" className="icon2"/></div>
+                    <div className="ic"><img src="/icon.png" alt="icon" className="icon2"/></div>
                     <div id="txt"><h3 id="txt2">QuizBuzz</h3></div>
                 </div>
                 <div className="home" onClick={hhome}>
-                  <div className="icones"><Home size={20} /></div>
+                  <div className="icones"><Home size={22} /></div>
                   <div className="labeles">
                     <h4>Home</h4>
                   </div>
                 </div>
 
                 <div className="newexam" onClick={hnewexam}>
-                  <div className="icones"><FilePlus size={20} /></div>
+                  <div className="icones"><FilePlus size={22} /></div>
                   <div className="labeles">
                     <h4>New Exam</h4>
                   </div>
                 </div>
 
                 <div className="newtask" onClick={groups}>
-                  <div className="icones"><ClipboardList size={20} /></div>
+                  <div className="icones"><ClipboardList size={22} /></div>
                   <div className="labeles">
                     <h4>Groups</h4>
                   </div>
                 </div>
 
                 <div className="profile" onClick={hprofile}>
-                  <div className="icones"><User size={20} /></div>
+                  <div className="icones"><User size={22} /></div>
                   <div className="labeles">
                     <h4>Profile</h4>
                   </div>
                 </div>
 
                 <div className="settings" onClick={settings}>
-                  <div className="icones"><Settings size={20} /></div>
+                  <div className="icones"><Settings size={22} /></div>
                   <div className="labeles">
                     <h4>Settings</h4>
                   </div>

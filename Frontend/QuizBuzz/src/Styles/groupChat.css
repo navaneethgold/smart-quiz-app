@@ -1,14 +1,14 @@
 .chat {
   position: fixed;
-  top: 14vh;
+  top: 11vh;
   right: 0;
   bottom: 0;
-  left: 225px;
-  width: calc(100% - 265px);
-  height: calc(100vh - 17vh);
+  left: 215px;
+  width: calc(100% - 215px);
+  height: calc(100vh - 11vh);
   display: flex;
   flex-direction: column;
-  background-color: #f4f7f9;
+  background: linear-gradient(to bottom, #d5e6f7, #e2e8f0);
   padding: 20px;
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -71,8 +71,7 @@
   display: flex;
   gap: 10px;
   padding: 10px 0;
-  border-top: 1px solid #ccc;
-  background-color: #fff;
+  background-color:transparent;
 }
 
 .chat-form input {

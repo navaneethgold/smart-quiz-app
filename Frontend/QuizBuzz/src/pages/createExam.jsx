@@ -67,7 +67,7 @@ const CreateExam=()=>{
     }
 
     return(
-        <div className="class">
+        <div className="class2">
             <div className="list-class">
               {allGroups.length > 0 ? (
                 <div className="group-table">

@@ -77,7 +77,7 @@ const Groups=()=>{
         <div className="class">
             <div className="create">
                 <form onSubmit={handleSubmit}>
-                    <input type="text" onChange={handleChange} value={group} required />
+                    <input type="text" onChange={handleChange} value={group} placeholder="Enter a name for the group..." required />
                     {token ?(<button type="submit">Create a Group {group}</button>):(<button>Login for creating a group</button>)}
                 </form>
                 {flashMessage && <Flash message={flashMessage} type={type}/>}
