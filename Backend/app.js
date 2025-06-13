@@ -15,6 +15,7 @@ import Messaging from './controllers/chatting.js';
 import exam from './models/exam.js';
 import question from './models/Questions.js';
 import answer from './models/answers.js';
+import analytic from './models/analytics.js';
 dotenv.config();
 const app=express();
 const server=createServer(app);
@@ -393,6 +394,36 @@ app.get("/:name/getAnswers",auth,async(req,res)=>{
   }catch(err){
     console.log(err);
     return res.json({message:"failed to fetch answers",got:false});
+  }
+})
+
+app.post("/postAnalytics",auth,async(req,res)=>{
+  try{
+    const {newana}=req.body;
+    const exists=await analytic.findOne({examId:newana.examId,examWho:newana.examWho});
+    if(exists){
+      return res.json({message:"already posted",posted:true});
+    }
+    const ana_reg=new analytic(newana);
+    await ana_reg.save();
+    return res.json({message:"successfully posted analytics",posted:true});
+  }catch(err){
+    console.log(err);
+    return res.json({message:"failed to post analytics",posted:false});
+  }
+})
+
+app.get("/getAllAnalytics",auth,async(req,res)=>{
+  try{
+    const puser=req.user.username;
+    const allAnalytics=await analytic.find({examWho:puser});
+    if(allAnalytics){
+      return res.json({message:"got all analytics",got:true,allana:allAnalytics});
+    }
+    return res.json({message:"No analytics",got:false});
+  }catch(err){
+    console.log(err);
+    return res.json({message:"failed to fetch analytics",got:false});
   }
 })
 

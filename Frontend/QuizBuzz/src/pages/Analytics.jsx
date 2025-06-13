@@ -50,6 +50,21 @@ const Analytics = () => {
             setAnswers(userAnswers);
             setScore(correctCount);
             setAccuracy(percentage.toFixed(2));
+            const numberUnattempted=userAnswers.filter(ans=>!ans || ans.trim()==="").length;
+            const newAnalytic = {
+              examId: examInfo._id,
+              examWho: user.username,
+              totalQ: totalQuestions,
+              correctQ: correctCount,
+              duration: examInfo.duration,
+              unattempted: numberUnattempted,
+            };
+            const res3=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/postAnalytics`,{newana:newAnalytic},{
+                withCredentials:true,
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            })
           }
         }
       } catch (err) {
