@@ -56,7 +56,7 @@ export default function Sidebar(){
         navigate("/groups")
     }
     const hprofile=()=>{
-        // navigate("/profile")
+        navigate("/profile")
     }
     const signup=()=>{
         navigate("/signUp");
@@ -67,17 +67,12 @@ export default function Sidebar(){
     const settings=()=>{
     //   navigate("/settings");
     }
-    const handleLogout=()=>{
-      localStorage.removeItem("token");
-      setisLogged(false);
-      navigate("/home");
-    }
+    
     return(
         <>
         <div className="head">
         {isLogged ? (
             <div className='head2'>
-              <h4 onClick={handleLogout}>LogOut</h4>
               <h2>Welcome, {userData.username}!</h2>
             </div>
           ) : (

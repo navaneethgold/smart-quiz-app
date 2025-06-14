@@ -16,6 +16,7 @@ import exam from './models/exam.js';
 import question from './models/Questions.js';
 import answer from './models/answers.js';
 import analytic from './models/analytics.js';
+import AIQuestionRoute from "./routes/gemini.js"
 dotenv.config();
 const app=express();
 const server=createServer(app);
@@ -59,6 +60,7 @@ main().then(()=>{
 async function main(){
     await mongoose.connect(db_url);
 }
+app.use("/",AIQuestionRoute);
 
 app.post("/signUp", async (req, res) => {
   try {
@@ -438,6 +440,15 @@ app.get("/:exam/analytics/leaderboard",auth,async(req,res)=>{
   }catch(err){
     console.log(err);
     return res.json({message:"Failed to load leaderboard",got:false})
+  }
+})
+
+app.get("/getProfile",auth,async(req,res)=>{
+  try{
+    res.json({message:"fetched profile",got:true,profile:req.user});
+  }catch(err){
+    console.log(err);
+    res.json({message:"couldn't fetch profile",got:false})
   }
 })
 

@@ -12,6 +12,8 @@ import CreateInterface from "./pages/createExamInterface";
 import ExamStart from "./pages/StartExam";
 import Analytics from "./pages/Analytics";
 import LeaderBoard from "./pages/LeaderBoard";
+import Profile from "./pages/profile";
+import GeminiAI from "./pages/geminiAI";
 function App() {
 
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/start-exam/:name" element={<ExamStart/>}/>
             <Route path="/:exam/analytics" element={<Analytics/>}/>
             <Route path="/:exam/analytics/leaderboard" element={<LeaderBoard/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/:un/:exam/AI" element={<GeminiAI/>}/>
           </Route>
       </Routes>
     </BrowserRouter>

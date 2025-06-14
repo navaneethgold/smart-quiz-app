@@ -1,9 +1,9 @@
 import { useState,useEffect,useCallback } from "react";
 import axios, { all } from "axios";
 import { useNavigate } from "react-router-dom";
-import { Axis3D } from "lucide-react";
 import Flash from "./flash";
 import '../Styles/groups.css'
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 const CreateExam=()=>{
     const [exam,setexam]=useState("");
     const [allGroups,setAllGroups]=useState([]);
@@ -65,6 +65,18 @@ const CreateExam=()=>{
             navigate(`/${un}/${exam}`);
         }
     }
+    const handleAI=async()=>{
+        const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime,linear:linearity==="Yes"},{
+            withCredentials:true,
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+        if(res.data.message==="success"){
+            const un=res.data.owner;
+            navigate(`/${un}/${exam}/AI`);
+        }
+    }
 
     return(
         <div className="class2">
@@ -117,8 +129,11 @@ const CreateExam=()=>{
                         </select>
                     </div>
                 </div>
+                <div className="buts">
+                    <button style={{display:"flex",alignItems:"center"}} onClick={handleAI}><AutoAwesomeIcon sx={{margin:"0.5rem"}}/>Generate Questions using AI</button>
+                    <button onClick={handleProceeding}>Proceed with creating Exam</button>
+                </div>
                 
-                <button onClick={handleProceeding}>Proceed with creating Exam</button>
             </div>
 
         </div>
