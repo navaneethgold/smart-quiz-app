@@ -65,7 +65,7 @@ export default function Sidebar(){
         navigate("/login");
     }
     const settings=()=>{
-    //   navigate("/settings");
+      navigate("/settings");
     }
     
     return(

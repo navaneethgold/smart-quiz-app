@@ -452,6 +452,46 @@ app.get("/getProfile",auth,async(req,res)=>{
     res.json({message:"couldn't fetch profile",got:false})
   }
 })
+app.delete("/deleteOrganQuizes", auth, async (req, res) => {
+  try {
+    const puser = req.user?.username;
+    if (!puser) {
+      console.log("unauth");
+      return res.status(401).json({ deleted: false, error: "Unauthorized" });
+    }
+
+    const result = await exam.deleteMany({ createdBy: puser });
+
+    return res.status(200).json({ deleted: true, count: result.deletedCount });
+  } catch (err) {
+    console.error("Error deleting organized quizzes:", err);
+    return res.status(500).json({ deleted: false, error: "Server Error" });
+  }
+});
+app.delete("/deleteCreatedGroups",auth,async(req,res)=>{
+  try{
+    const puser=req.user.username;
+    await group.deleteMany({createdBy:puser});
+    return res.json({deleted:true});
+  }catch(err){
+    console.log(err);
+    return res.json({deleted:false});
+  }
+})
+app.delete("/deleteAccount",auth,async(req,res)=>{
+  try{
+    const puser=req.user.username;
+    await analytic.deleteMany({examWho:puser});
+    await group.deleteMany({createdBy:puser});
+    await answer.deleteMany({examWho:puser});
+    await msgs.deleteMany({sender:puser});
+    await user.deleteMany({username:puser});
+    return res.json({deleted:true});
+  }catch(err){
+    console.log(err);
+    return res.json({deleted:false});
+  }
+})
 
 app.get("/ping", (req, res) => {
   res.send("Backend is alive!");

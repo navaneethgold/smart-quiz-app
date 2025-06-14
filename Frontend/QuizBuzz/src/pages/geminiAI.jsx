@@ -7,6 +7,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import Flash from "./flash";
 const GeminiAI=()=>{
     const {un,exam}=useParams();
+    const navigate=useNavigate();
     const token=localStorage.getItem("token");
     const [difficult,setdifficulty]=useState("Medium");
     const [maxMarks,setmaxMarks]=useState('');
@@ -57,7 +58,7 @@ const GeminiAI=()=>{
         console.log("Questions generated and added successfully!");
         setflashMessage("Questions generated and added successfully!")
         setisType("success");
-            setTimeout(() => {
+        setTimeout(() => {
             navigate("/home");
         }, 3000);
       } catch (error) {

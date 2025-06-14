@@ -14,6 +14,7 @@ import Analytics from "./pages/Analytics";
 import LeaderBoard from "./pages/LeaderBoard";
 import Profile from "./pages/profile";
 import GeminiAI from "./pages/geminiAI";
+import Settings from "./pages/settings";
 function App() {
 
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/:exam/analytics/leaderboard" element={<LeaderBoard/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/:un/:exam/AI" element={<GeminiAI/>}/>
+            <Route path="/settings" element={<Settings/>}/>
           </Route>
       </Routes>
     </BrowserRouter>
