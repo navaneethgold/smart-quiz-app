@@ -74,6 +74,16 @@ const CreateInterface = () => {
       questionNo:index+1,
       ...questions[index]      
     };
+    if(questions[index].questionsType==="MCQ"){
+      const optionsall=questions[index].additional;
+      const ind=optionsall.indexOf(questions[index].qAnswer);
+      if(ind===-1){
+        setflashMessage("Answer should exist in options");
+        setistype("error");
+        setShowFlash(true);
+        return;
+      }
+    }
     console.log(payload);
     try {
       const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam/${exam}/create-question`, {payload}, {

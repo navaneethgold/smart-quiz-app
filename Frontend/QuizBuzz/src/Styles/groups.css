@@ -65,15 +65,18 @@ body {
 .list-class {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
 }
 
 .group-table {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
   width: 90%;
   max-width: 1200px;
+  margin-left: 4rem;
 }
 
 .group-header,
@@ -198,6 +201,7 @@ label {
   height: calc(100vh - 11vh);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   /* background: linear-gradient(to bottom right, #f8fafc, #e2e8f0); */
   background: linear-gradient(to bottom, #d5e6f7, #e2e8f0);
@@ -205,4 +209,7 @@ label {
   padding-top: 5rem;
   overflow-y: auto;
   box-sizing: border-box;
+}
+#else{
+  align-self: center;
 }

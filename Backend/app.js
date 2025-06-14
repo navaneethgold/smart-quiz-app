@@ -306,11 +306,12 @@ app.get("/home/getExams/:username",async(req,res)=>{
     }
     const corresgrpNames={};
     const hisExams= await exam.find({groups:{$in:groupIds}});
+    const iorgan=await exam.find({createdBy:username});
     for(const eachID of groupIds){
       const pargroup=await group.findOne({_id:eachID});
       corresgrpNames[eachID]=pargroup.groupName;
     }
-    return res.json({message:"Got exams" ,gotExams:true,exams:hisExams,grpNames:corresgrpNames});
+    return res.json({message:"Got exams" ,gotExams:true,exams:hisExams,grpNames:corresgrpNames,iorgan:iorgan});
   }catch(err){
     console.log(err);
     return res.json({message:"failed to get exams", gotExams:false});

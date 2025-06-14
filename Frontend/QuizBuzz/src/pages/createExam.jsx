@@ -9,6 +9,7 @@ const CreateExam=()=>{
     const [allGroups,setAllGroups]=useState([]);
     const [flashMessage,setflashMessage]=useState("");
     const [type,setistype]=useState("");
+    const [show,setShow]=useState(false);
     const token=localStorage.getItem("token");
     const [totalTime, setTotalTime] = useState(0);
     const navigate=useNavigate();
@@ -54,34 +55,48 @@ const CreateExam=()=>{
         })
     }
     const handleProceeding=async()=>{
-        const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime,linear:linearity==="Yes"},{
-            withCredentials:true,
-            headers:{
-                Authorization: `Bearer ${token}`
+        if(checked.length>0){
+            const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime,linear:linearity==="Yes"},{
+                withCredentials:true,
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if(res.data.message==="success"){
+                const un=res.data.owner;
+                navigate(`/${un}/${exam}`);
             }
-        })
-        if(res.data.message==="success"){
-            const un=res.data.owner;
-            navigate(`/${un}/${exam}`);
+        }else{
+            setShow(true);
+            setflashMessage("Select groups to create Exam");
+            setistype("error");
         }
+        
     }
     const handleAI=async()=>{
-        const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime,linear:linearity==="Yes"},{
-            withCredentials:true,
-            headers:{
-                Authorization: `Bearer ${token}`
+        if(checked.length>0){
+            const res=await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-new-exam`,{groups:checked,examName:exam,duration:totalTime,linear:linearity==="Yes"},{
+                withCredentials:true,
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if(res.data.message==="success"){
+                const un=res.data.owner;
+                navigate(`/${un}/${exam}/AI`);
             }
-        })
-        if(res.data.message==="success"){
-            const un=res.data.owner;
-            navigate(`/${un}/${exam}/AI`);
+        }else{
+            setShow(true);
+            setflashMessage("Select groups to create Exam");
+            setistype("error");
         }
+        
     }
 
     return(
         <div className="class2">
             <div className="list-class">
-              {allGroups.length > 0 ? (
+              {allGroups.length > 0 ? (<>
                 <div className="group-table">
                   <div className="group-header">
                     <div>Group Name</div>
@@ -103,10 +118,7 @@ const CreateExam=()=>{
                     </div>
                   ))}
                 </div>
-              ) : (
-                <p>You can only Conduct a exam if you are the group Admin</p>
-              )}
-            </div>
+              
             <div className="proceed">
                 <div className="foot">
                     <div className="ename">
@@ -129,11 +141,16 @@ const CreateExam=()=>{
                         </select>
                     </div>
                 </div>
+                {show && <Flash message={flashMessage} show={show} setShow={setShow} type={type}/>}
                 <div className="buts">
                     <button style={{display:"flex",alignItems:"center"}} onClick={handleAI}><AutoAwesomeIcon sx={{margin:"0.5rem"}}/>Generate Questions using AI</button>
                     <button onClick={handleProceeding}>Proceed with creating Exam</button>
                 </div>
                 
+            </div></>
+            ) : (
+                <p id="else">You can only Conduct a exam if you are a group's Admin</p>
+              )}
             </div>
 
         </div>

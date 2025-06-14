@@ -28,6 +28,7 @@ const Home = () => {
   const [allExams, setallExams] = useState([]);
   const [grpNames, setgrpNames] = useState({});
   const [allAnalytics, setAllAnalytics] = useState([]);
+  const [organised,setOrganised]=useState([]);
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
@@ -80,6 +81,7 @@ const Home = () => {
         if (res.data.gotExams) {
           setallExams(res.data.exams);
           setgrpNames(res.data.grpNames);
+          setOrganised(res.data.iorgan);
         }
       } catch (err) {
         console.error("Failed to fetch exams", err);
@@ -209,6 +211,27 @@ const Home = () => {
         ) : (
           <p>No exams available yet.</p>
         )}
+      </div>
+      <h1 className="exam-heading">Exams Organised by You</h1>
+      <div className="organised">
+          <div className="exam-grid">
+        {organised.length > 0 ? (
+          organised.map((exam) => (
+            <div className="exam-card" key={exam._id}>
+              <h2>{exam.examName}</h2>
+              <p><strong>Created by:</strong> {exam.createdBy}</p>
+              <p><strong>Groups:</strong> {exam.groups.map((grp) => grpNames[grp] || grp).join(", ")}</p>
+              <p><strong>Duration:</strong> {exam.duration} minutes</p>
+              <p><strong>Created on:</strong> {new Date(exam.createtime).toLocaleString()}</p>
+              <div className="completed-section">
+                <button className="start-btn view-analytics" onClick={() => navigate(`/${exam._id}/analytics/leaderboard`)}>View Analytics</button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No exams available yet.</p>
+        )}
+      </div>
       </div>
     </div>
   );

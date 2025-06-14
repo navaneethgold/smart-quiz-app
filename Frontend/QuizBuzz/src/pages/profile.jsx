@@ -54,7 +54,7 @@ const Profile=()=>{
             <div className="user-profile-section">
                 <h2 className="profile-title">👤 User Profile</h2>
                 {isLogged && <>
-                    <h4 onClick={handleLogout}>LogOut</h4>
+                    <button onClick={handleLogout} id="myb">LogOut</button>
                     <p><strong>Username:</strong> {userData.username}</p>
                     <p><strong>Email:</strong> {userData.email}</p></>
                 }
