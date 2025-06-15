@@ -32,14 +32,14 @@ const sessionOptions={
         httpOnly:true,
         sameSite:"none",
         secure:true,
-        domain:"QuizBuzz.onrender.com",
+        domain:"smart-quiz-app.onrender.com",
         maxAge:7 * 24 * 60 * 60 * 1000,
     },
 };
 const allowedOrigins=[
     "http://localhost:5173",
-    "https://QuizBuzz.onrender.com",   // production
-    "https://QuizBuzz.vercel.app"
+    "https://smart-quiz-app.onrender.com",   // production
+    "https://smart-quiz-app-two.vercel.app"
 ]
 app.use(cors({
     origin:(origin,callback)=>{
