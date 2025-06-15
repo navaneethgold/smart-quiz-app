@@ -129,3 +129,17 @@
   background-color: #ccc;
   border-radius: 10px;
 }
+
+
+@media (max-width:480px) {
+  .home-page{
+    left: 60px;
+    top: 8vh;
+  }
+  #cont{
+    width: 70%;
+  }
+  .summary-chart{
+    min-width: 300px;
+  }
+}

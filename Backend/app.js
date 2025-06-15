@@ -299,7 +299,7 @@ app.post("/create-new-exam/:exam/create-question",async(req,res)=>{
 app.get("/home/getExams/:username",async(req,res)=>{
   const {username}=req.params;
   try{
-    const hisGroups=await group.find({members:username});
+    const hisGroups=await group.find({members:username,createdBy:{$ne:username}});
     const groupIds=[];
     for(const grp of hisGroups){
       groupIds.push(grp._id);

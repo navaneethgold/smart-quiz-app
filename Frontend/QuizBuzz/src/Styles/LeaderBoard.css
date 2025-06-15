@@ -65,3 +65,10 @@
   color: #cd7f32;
   font-weight: bold;
 }
+
+@media (max-width:480px) {
+  .weAreLeaders{
+    top: 8vh;
+    left: 60px;
+  }
+}

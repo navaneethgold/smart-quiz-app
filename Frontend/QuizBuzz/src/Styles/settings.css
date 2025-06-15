@@ -35,3 +35,10 @@
 .delete-account:hover {
     background-color: #f8d7da;
 }
+
+@media (max-width:480px) {
+    .settin{
+        left: 60px;
+        top: 8vh;
+    }
+}

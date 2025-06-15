@@ -106,7 +106,7 @@ const CreateInterface = () => {
 
       <div className="questions-container">
         {questions.map((q, index) => (
-          <div className="question-box" key={index}>
+          <div className="question-box2" key={index}>
             <h3>Question {index + 1}</h3>
             <label>Type:</label>
             <select

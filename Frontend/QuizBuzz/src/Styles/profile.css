@@ -115,3 +115,10 @@
   background-color:#2980b9;
   color: white;
 }
+
+@media (max-width:480px) {
+  .pro{
+    left: 60px;
+    top: 8vh;
+  }
+}

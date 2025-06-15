@@ -140,7 +140,7 @@ const Home = () => {
         <div className="summary-section">
           <div className="summary-chart">
             <h3>Summary</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={250} id="cont">
               <PieChart>
                 <Pie
                   data={summaryData}

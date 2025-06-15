@@ -5,6 +5,7 @@
   bottom: 0;
   right: 0;
   padding: 2rem;
+  background: linear-gradient(to bottom, #d5e6f7, #e2e8f0);
   font-family: Arial, sans-serif;
   overflow: auto;
 }
@@ -56,4 +57,11 @@
   margin-bottom: 1rem;
   background: linear-gradient(to right, #2563eb, #3b82f6);
   color: white;
+}
+
+@media (max-width:480px) {
+  .analytics-container{
+    left: 60px;
+    top: 8vh;
+  }
 }
