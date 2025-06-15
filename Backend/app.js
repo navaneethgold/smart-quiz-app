@@ -23,20 +23,23 @@ const server=createServer(app);
 Messaging(server);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.set("trust proxy", 1);
 const sessionOptions={
     secret:process.env.SECRET,
     resave:false,
-    saveUninitialized:true,
+    saveUninitialized:false,
     cookie:{
         httpOnly:true,
         sameSite:"none",
         secure:true,
-        domain:"localhost:8000",
+        domain:"QuizBuzz.onrender.com",
         maxAge:7 * 24 * 60 * 60 * 1000,
     },
 };
 const allowedOrigins=[
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://QuizBuzz.onrender.com",   // production
+    "https://QuizBuzz.vercel.app"
 ]
 app.use(cors({
     origin:(origin,callback)=>{
