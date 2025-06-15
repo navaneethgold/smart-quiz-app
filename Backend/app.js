@@ -32,13 +32,13 @@ const sessionOptions={
         httpOnly:true,
         sameSite:"none",
         secure:true,
-        domain:"smart-quiz-app.onrender.com",
+        domain:"smart-quiz-app-e3c9.onrender.com",
         maxAge:7 * 24 * 60 * 60 * 1000,
     },
 };
 const allowedOrigins=[
     "http://localhost:5173",
-    "https://smart-quiz-app.onrender.com",   // production
+    "https://smart-quiz-app-e3c9.onrender.com",   // production
     "https://smart-quiz-app-two.vercel.app"
 ]
 app.use(cors({
